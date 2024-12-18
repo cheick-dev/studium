@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  name          String?
+  role          String    @default("STUDENT")
+  courses       Course[]  @relation("TeacherCourses")
+  comments      Comment[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  enrollments   Enrollment[]
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  content     String    @default("")
+  videoUrl    String?
+  pdfUrl      String?
+  teacher     User      @relation("TeacherCourses", fields: [teacherId], references: [id])
+  teacherId   String
+  comments    Comment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  enrollments Enrollment[]
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  price       Float     @default(0)
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  rating    Int
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId  String
+  price       Float     @default(0)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime @default(now())
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  courseId  String
+  progress  Int      @default(0)
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  courses   Course[]
+  createdAt DateTime @default(now())
+}
