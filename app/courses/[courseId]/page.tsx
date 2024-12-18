@@ -13,7 +13,6 @@ export default async function CoursePage({
 	params: { courseId: string };
 }) {
 	const session = await getServerSession(authOptions);
-
 	const course = await db.course.findUnique({
 		where: {
 			id: params.courseId,
@@ -43,20 +42,25 @@ export default async function CoursePage({
 						<h1 className="text-3xl font-bold mb-4">
 							{course.title}
 						</h1>
-						<span className="text-lg font-semibold mb-6">
-							Créé par {course.teacher?.name}
+						<span className="text-sm font-semibold mb-6">
+							Créé par{" "}
+							<span className="font-bold text-lg">
+								{course.teacher?.name}
+							</span>
 						</span>
 					</div>
 					{session?.user && session.user.role !== "TEACHER" && (
 						<SubscribeButton courseId={course.id} />
 					)}
 				</div>
-				<div className=" rounded-lg shadow-md p-6 mb-6">
-					<p className=" mb-4">{course.description}</p>
+				<div className="p-6 mb-6">
+					<div className="mb-4">
+						<CoursePreview data={course.description} />
+					</div>
 					{session?.user && (
 						<>
 							<div className="prose max-w-none mb-6">
-								{course.content}
+								<CoursePreview data={course.content} />
 							</div>
 							<div className="flex gap-4">
 								{course.videoUrl && (
@@ -88,7 +92,6 @@ export default async function CoursePage({
 								<h2 className="text-2xl font-bold mb-4">
 									Comments
 								</h2>
-								{/* Comments section will be added in the next implementation */}
 							</div>
 						</>
 					)}

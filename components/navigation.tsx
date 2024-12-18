@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { UserNav } from "./user-nav";
-import { GraduationCap, Search } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import { ModeToggle } from "./toggle-mode";
 import UserProfileSidebar from "./dashboard/profile";
 import { useState } from "react";

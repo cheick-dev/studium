@@ -25,28 +25,36 @@ const NewArticle = () => {
 			content: "",
 		},
 	});
+	const reset = () => form.reset();
 
 	const onSubmit = async (data: CourseFormData) => {
-		const response = await fetch(`/api/courses`, {
-			method: "POST",
-			body: JSON.stringify(data),
-			headers: {
-				contentType: "application/json",
-			},
-		});
-		const json = await response.json();
-		console.log(json);
-
-		toast({
-			title: "Success",
-			description: "Article créé avec succès !",
-			variant: "default",
-		});
-		redirect("/dashboard/courses");
+		try {
+			await fetch(`/api/courses`, {
+				method: "POST",
+				body: JSON.stringify(data),
+				headers: {
+					contentType: "application/json",
+				},
+			});
+			toast({
+				title: "Success",
+				description: "Cours créé avec succès !",
+				variant: "default",
+			});
+			form.reset();
+			redirect("/dashboard");
+		} catch (error) {
+			toast({
+				title: "Erreur",
+				description: "Une erreur est survenu !",
+				variant: "destructive",
+			});
+			form.reset();
+		}
 	};
 
 	return (
-		<div className="max-w-4xl mx-auto" data-color-mode="light">
+		<div className="w-[80%] mx-auto mb-4" data-color-mode="auto">
 			<h1 className="text-4xl font-bold mb-8">Nouvel Article</h1>
 			<Form {...form}>
 				<form
@@ -77,9 +85,14 @@ const NewArticle = () => {
 							<FormItem>
 								<FormLabel>Description</FormLabel>
 								<FormControl>
-									<Input
-										placeholder="Brève description de l'article"
-										{...field}
+									<MDEditor
+										value={field.value}
+										onChange={(value) =>
+											field.onChange(value || "")
+										}
+										preview="live"
+										height={300}
+										className="w-full"
 									/>
 								</FormControl>
 								<FormMessage />
@@ -110,11 +123,7 @@ const NewArticle = () => {
 					/>
 
 					<div className="flex justify-end gap-4">
-						<Button
-							type="button"
-							variant="outline"
-							//   onClick={() => navigate("/admin")}
-						>
+						<Button type="button" variant="outline" onClick={reset}>
 							Annuler
 						</Button>
 						<Button type="submit">Publier</Button>

@@ -74,37 +74,68 @@ export default function CoursesPage() {
 					</div>
 				) : (
 					<>
-						{enrolledCourses.length > 0 ? (
-							<div className="grid gap-4">
-								{enrolledCourses.map((enrollment) => (
-									<Card key={enrollment.id}>
-										<CardHeader>
-											<CardTitle>
-												{enrollment.course.title}
-											</CardTitle>
-										</CardHeader>
-										<CardContent>
-											<div className="space-y-2">
-												<div className="flex items-center justify-between text-sm">
-													<span>Progression</span>
-													<span className="font-medium">
-														{enrollment.progress}%
-													</span>
-												</div>
-												<Progress
-													value={enrollment.progress}
-												/>
-											</div>
-										</CardContent>
-									</Card>
+						{isTeacher ? (
+							<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+								{courses.map((course) => (
+									<CourseCard
+										key={course.id}
+										description=""
+										id={course.id}
+										image=""
+										price={0}
+										title={course.title}
+										hasPdf={false}
+										hasVideo={false}
+										category={course?.category}
+										teacher={course?.teacher}
+									/>
 								))}
 							</div>
 						) : (
-							<div className="text-2xl font-bold text-center">
-								{isTeacher
-									? "Vous n'avez pas encore créé de cours"
-									: "Abandonnez vous à un cours"}
-							</div>
+							<>
+								{enrolledCourses.length > 0 ? (
+									<div className="grid gap-4">
+										{enrolledCourses.map((enrollment) => (
+											<Card key={enrollment.id}>
+												<CardHeader>
+													<CardTitle>
+														{
+															enrollment.course
+																.title
+														}
+													</CardTitle>
+												</CardHeader>
+												<CardContent>
+													<div className="space-y-2">
+														<div className="flex items-center justify-between text-sm">
+															<span>
+																Progression
+															</span>
+															<span className="font-medium">
+																{
+																	enrollment.progress
+																}
+																%
+															</span>
+														</div>
+														<Progress
+															value={
+																enrollment.progress
+															}
+														/>
+													</div>
+												</CardContent>
+											</Card>
+										))}
+									</div>
+								) : (
+									<div className="text-2xl font-bold text-center">
+										{isTeacher
+											? "Vous n'avez pas encore créé de cours"
+											: "Abandonnez vous à un cours"}
+									</div>
+								)}
+							</>
 						)}
 					</>
 				)}
