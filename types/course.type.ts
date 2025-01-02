@@ -21,6 +21,7 @@ export interface EnrolledCourse {
 	progress: number;
 	createdAt: Date;
 	course: {
+		id: string;
 		title: string;
 		description: string;
 		videoUrl: string | null;

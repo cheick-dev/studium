@@ -43,22 +43,24 @@ export default function CoursesPage() {
 						))}
 					</div>
 				) : (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{courses.map((course) => (
-							<CourseCard
-								key={course.id}
-								description=""
-								id={course.id}
-								image=""
-								price={0}
-								title={course.title}
-								hasPdf={false}
-								hasVideo={false}
-								category={course?.category}
-								teacher={course?.teacher}
-							/>
-						))}
-					</div>
+					<>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+							{courses.map((course) => (
+								<CourseCard
+									key={course.id}
+									description={""}
+									id={course.id}
+									image=""
+									price={0}
+									title={course.title}
+									hasPdf={false}
+									hasVideo={false}
+									category={course?.category}
+									teacher={course?.teacher}
+								/>
+							))}
+						</div>
+					</>
 				)}
 			</div>
 		</div>

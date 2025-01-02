@@ -59,8 +59,11 @@ export async function POST(req: Request) {
 			courseId: course.id,
 		},
 	});
-	// return NextResponse.json(enrollment);
-	return new Response("Enrollment successful", { status: 200 });
+	return NextResponse.json({
+		message: "Vous vous ête abonné ce cours",
+		enrollment: true,
+	});
+	// return new Response("Enrollment successful", { status: 200 });
 }
 
 export async function DELETE(req: Request) {
@@ -84,5 +87,9 @@ export async function DELETE(req: Request) {
 		where: { id: existingEnrollment.id },
 	});
 
-	return new Response("Unenrollment successful", { status: 200 });
+	return NextResponse.json({
+		message: "Vous vous êtes désabonné ce cours",
+		enrollment: false,
+	});
+	// return new Response("Unenrollment successful", { status: 200 });
 }

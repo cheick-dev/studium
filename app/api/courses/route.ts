@@ -18,7 +18,6 @@ export async function POST(req: Request) {
 
 		const json = await req.json();
 		const body = courseSchema.parse(json);
-		console.log(body);
 
 		const course = await db.course.create({
 			data: {

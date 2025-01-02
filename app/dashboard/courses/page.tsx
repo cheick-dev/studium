@@ -8,6 +8,7 @@ import { useCourseStore } from "@/store/course-store";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { EnrolledCourse } from "@/types/course.type";
 import { Progress } from "@/components/ui/progress";
+import Link from "next/link";
 
 export default function CoursesPage() {
 	const [loading, setLoading] = useState(true);
@@ -99,10 +100,15 @@ export default function CoursesPage() {
 											<Card key={enrollment.id}>
 												<CardHeader>
 													<CardTitle>
-														{
-															enrollment.course
-																.title
-														}
+														<Link
+															href={`/courses/${enrollment.course.id}`}
+														>
+															{
+																enrollment
+																	.course
+																	.title
+															}
+														</Link>
 													</CardTitle>
 												</CardHeader>
 												<CardContent>
