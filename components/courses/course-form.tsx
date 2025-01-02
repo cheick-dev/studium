@@ -12,7 +12,7 @@ interface CourseContentFormData {
 	markdownContent: string;
 }
 
-export const MarkdownEditor: React.FC = () => {
+export const CourseForm = () => {
 	const [previewMode, setPreviewMode] = useState(false);
 	const { control, handleSubmit, watch } = useForm<CourseContentFormData>({
 		defaultValues: {
@@ -84,4 +84,4 @@ export const MarkdownEditor: React.FC = () => {
 	);
 };
 
-export default MarkdownEditor;
+export default CourseForm;

@@ -13,7 +13,7 @@ export const registerSchema = z.object({
 	password: z
 		.string()
 		.min(6, { message: "Password must be at least 6 characters" }),
-	// role: z.enum(["TEACHER", "STUDENT"]),
+	role: z.enum(["TEACHER", "STUDENT"]),
 });
 
 export type LoginFormData = z.infer<typeof loginSchema>;
